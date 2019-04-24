@@ -1,0 +1,4 @@
+C:\Github Repos\ArtificerBuffs_Mod\ExamplePlugin\obj\Debug\netstandard2.0\ExamplePlugin.csprojAssemblyReference.cache
+C:\Github Repos\ArtificerBuffs_Mod\ExamplePlugin\obj\Debug\netstandard2.0\ExamplePlugin.csproj.CoreCompileInputs.cache
+C:\Github Repos\ArtificerBuffs_Mod\ExamplePlugin\obj\Debug\netstandard2.0\ExamplePlugin.AssemblyInfoInputs.cache
+C:\Github Repos\ArtificerBuffs_Mod\ExamplePlugin\obj\Debug\netstandard2.0\ExamplePlugin.AssemblyInfo.cs
