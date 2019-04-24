@@ -3,6 +3,7 @@ using RoR2;
 using EntityStates;
 using UnityEngine;
 
+
 namespace BnellsCharacterReworks.ArtificerRework
 {
     [BepInDependency("com.bepis.r2api")]
@@ -11,21 +12,14 @@ namespace BnellsCharacterReworks.ArtificerRework
     {
         public ArtificerRework()
         {
-            
+            SkillAPI.InitHooks();
         }
         
         public void Awake()
         {
-            // Add blink as a jump skill
-            // Add freeze dash as utility skill
-        }
+            SkillAPI.AddSkillOverride(ExpandedSkillSlot.Jump, SurvivorIndex.Engineer, new MageBlinkState());
 
-
-        public void Update()
-        {
-            
         }
-        
     }
 
     

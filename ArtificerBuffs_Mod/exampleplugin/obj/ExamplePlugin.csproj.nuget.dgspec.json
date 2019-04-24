@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Github Repos\\ArtificerBuffs_Mod\\ExamplePlugin\\ExamplePlugin.csproj": {}
+    "C:\\Github Repos\\ROR2_CharacterReworks\\ArtificerBuffs_Mod\\ExamplePlugin\\ExamplePlugin.csproj": {}
   },
   "projects": {
-    "C:\\Github Repos\\ArtificerBuffs_Mod\\ExamplePlugin\\ExamplePlugin.csproj": {
+    "C:\\Github Repos\\ROR2_CharacterReworks\\ArtificerBuffs_Mod\\ExamplePlugin\\ExamplePlugin.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Github Repos\\ArtificerBuffs_Mod\\ExamplePlugin\\ExamplePlugin.csproj",
+        "projectUniqueName": "C:\\Github Repos\\ROR2_CharacterReworks\\ArtificerBuffs_Mod\\ExamplePlugin\\ExamplePlugin.csproj",
         "projectName": "BnellsCharacterReworks",
-        "projectPath": "C:\\Github Repos\\ArtificerBuffs_Mod\\ExamplePlugin\\ExamplePlugin.csproj",
+        "projectPath": "C:\\Github Repos\\ROR2_CharacterReworks\\ArtificerBuffs_Mod\\ExamplePlugin\\ExamplePlugin.csproj",
         "packagesPath": "C:\\Users\\nelli\\.nuget\\packages\\",
-        "outputPath": "C:\\Github Repos\\ArtificerBuffs_Mod\\ExamplePlugin\\obj\\",
+        "outputPath": "C:\\Github Repos\\ROR2_CharacterReworks\\ArtificerBuffs_Mod\\ExamplePlugin\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

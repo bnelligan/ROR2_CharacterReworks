@@ -30,7 +30,7 @@
   },
   "libraries": {
     "Microsoft.NETCore.Platforms/1.1.0": {
-      "sha512": "bLpT1f/SFlO1CzqXG12KnJzpZs6lv24uX2Rzi4Fmm0noJpNlnWRVryuO3yK18Ca04t/YHcO1e1Z0WDfjseqNzw==",
+      "sha512": "kz0PEW2lhqygehI/d6XsPCQzD7ff7gUJaVGPVETX611eadGsA3A877GdSlU0LRVMCTH/+P3o2iDTak+S08V2+A==",
       "type": "package",
       "path": "microsoft.netcore.platforms/1.1.0",
       "files": [
@@ -179,23 +179,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\bnelligan\\.nuget\\packages\\": {},
+    "C:\\Users\\nelli\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\bnelligan\\Downloads\\ArtificerBuffs_Mod\\ArtificerBuffs_Mod\\ExamplePlugin\\ExamplePlugin.csproj",
+      "projectUniqueName": "C:\\Github Repos\\ROR2_CharacterReworks\\ArtificerBuffs_Mod\\ExamplePlugin\\BnellsCharacterReworks.csproj",
       "projectName": "BnellsCharacterReworks",
-      "projectPath": "C:\\Users\\bnelligan\\Downloads\\ArtificerBuffs_Mod\\ArtificerBuffs_Mod\\ExamplePlugin\\ExamplePlugin.csproj",
-      "packagesPath": "C:\\Users\\bnelligan\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\bnelligan\\Downloads\\ArtificerBuffs_Mod\\ArtificerBuffs_Mod\\ExamplePlugin\\obj\\",
+      "projectPath": "C:\\Github Repos\\ROR2_CharacterReworks\\ArtificerBuffs_Mod\\ExamplePlugin\\BnellsCharacterReworks.csproj",
+      "packagesPath": "C:\\Users\\nelli\\.nuget\\packages\\",
+      "outputPath": "C:\\Github Repos\\ROR2_CharacterReworks\\ArtificerBuffs_Mod\\ExamplePlugin\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\bnelligan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\nelli\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

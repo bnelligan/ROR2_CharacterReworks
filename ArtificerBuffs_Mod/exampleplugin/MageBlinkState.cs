@@ -4,7 +4,7 @@ using RoR2;
 using UnityEngine;
 using EntityStates;
 
-namespace ArtificerRework
+namespace BnellsCharacterReworks.ArtificerRework
 {
     // Token: 0x020006EF RID: 1775
     public class MageBlinkState : BaseState

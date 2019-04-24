@@ -10,27 +10,77 @@ using RoR2;
 using UnityEngine;
 using MonoMod.Cil;
 using Mono.Cecil.Cil;
-using System.Collections.Generic;
+using AetherLib;
+using AetherLib.Util.Reflection;
+using AetherLib.Util.Config;
+using R2API;
 
 namespace BnellsCharacterReworks
 {
     public static class SkillAPI
     {
+        /// <summary>
+        /// Lookup for jump overrides by body prefab name
+        /// </summary>
+        public static Dictionary<SurvivorIndex, EntityState> JumpOverrides;
+
+        public static bool IsInit { get; private set; } = false;
         public static void InitHooks()
         {
-            IL.EntityStates.GenericCharacterMain.FixedUpdate += GenericCharacterMain_FixedUpdate;
-        }
-
-        private static void GenericCharacterMain_FixedUpdate(ILContext il)
-        {
-            ILCursor c = il.
-        }
-
-        public static void AddSkillOverride(ExpandedSkillSlot skillSlot, SurvivorIndex survivor, SkillOverride skillOverride)
-        {
-            if((sbyte)skillSlot <= (sbyte)SkillSlot.Special)
+            if(!IsInit)
             {
+                On.EntityStates.GenericCharacterMain.FixedUpdate += GenericCharacterMain_FixedUpdate;
+                JumpOverrides = new Dictionary<SurvivorIndex, EntityState>();
+                IsInit = true;
+            }
+        }
 
+        private static void GenericCharacterMain_FixedUpdate(On.EntityStates.GenericCharacterMain.orig_FixedUpdate orig, GenericCharacterMain self)
+        {
+            // Check for jump input first, since the base function resets input
+            CharacterBody characterBody = ReflectionUtil.GetPropertyValue<CharacterBody>(self, "characterBody");
+            string baseNameToken = ReflectionUtil.GetFieldValue<string>(characterBody, "baseNameToken");
+            SurvivorIndex survivorIndex = SurvivorIndex.None;
+            bool doJump = false;
+            Debug.Log("Searching for name token == " + baseNameToken);
+            
+            bool isAuthority = ReflectionUtil.GetPropertyValue<bool>(self, "isAuthority");
+            if (isAuthority)
+            {
+                
+                if (characterBody && JumpOverrides.ContainsKey(survivorIndex))
+                {
+                    Debug.Log("Jump override for: " + survivorIndex);
+
+                    ReflectionUtil.InvokeMethod(self, "GatherInputs");
+                    CharacterMotor characterMotor = ReflectionUtil.GetPropertyValue<CharacterMotor>(self, "characterMotor");
+                    bool jumpInputRecieved = ReflectionUtil.GetFieldValue<bool>(self, "jumpInputReceived");
+                    int jumpCount = ReflectionUtil.GetFieldValue<int>(characterMotor, "jumpCount");
+                    int maxJumpCount = ReflectionUtil.GetPropertyValue<int>(characterBody, "maxJumpCount");
+                    if (jumpInputRecieved && jumpCount < maxJumpCount)
+                    {
+                        doJump = true;
+                    }
+                }
+            }
+            // Now call orig and override, if needed
+            orig.Invoke(self);
+            if(doJump)
+            {
+                Debug.Log($"Entering jump override state {survivorIndex} for {characterBody.name}");
+                self.outer.SetNextState(JumpOverrides[survivorIndex]);
+            }
+        }
+
+        public static void AddSkillOverride(ExpandedSkillSlot skillSlot, SurvivorIndex survivor, EntityState activationState)
+        {
+            if(skillSlot != ExpandedSkillSlot.Jump)
+            {
+                SkillSlot baseSlot = skillSlot.ToBaseSkillSlot();
+            }
+            else
+            {
+                JumpOverrides[survivor] = activationState;
             }
         }
 
@@ -97,27 +147,12 @@ namespace BnellsCharacterReworks
     }
     
     public enum ExpandedSkillSlot : sbyte
-        {
-            None = -1,
-            Primary = 0,
-            Secondary = 1,
-            Utility = 2,
-            Special = 3,
-            Jump = 4
-        }
-    public class SkillOverride : GenericSkill
     {
-        ExpandedSkillSlot skillSlot;
-        GenericSkill origSkill;
-        
-        public SkillOverride(GenericSkill originalSkill)
-        {
-
-            
-        }
-        public SkillOverride(ExpandedSkillSlot skillSlot, SurvivorIndex survivor)
-        {
-            origSkill = this;
-        }
+        None = -1,
+        Primary = 0,
+        Secondary = 1,
+        Utility = 2,
+        Special = 3,
+        Jump = 4
     }
 }
