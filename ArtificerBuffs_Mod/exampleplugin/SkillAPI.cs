@@ -22,20 +22,52 @@ namespace BnellsCharacterReworks
         /// <summary>
         /// Lookup for jump overrides by body prefab name
         /// </summary>
-        public static Dictionary<SurvivorIndex, EntityState> JumpOverrides;
-
+        public static Dictionary<string, EntityState> JumpOverrides;
+        
         public static bool IsInit { get; private set; } = false;
         public static void InitHooks()
         {
             if(!IsInit)
             {
-                On.EntityStates.GenericCharacterMain.FixedUpdate += GenericCharacterMain_FixedUpdate;
-                JumpOverrides = new Dictionary<SurvivorIndex, EntityState>();
+                //On.EntityStates.GenericCharacterMain.FixedUpdate += BAD_GenericCharacterMain_FixedUpdate;
+                IL.EntityStates.GenericCharacterMain.FixedUpdate += GenericCharacterMain_FixedUpdate;
+                JumpOverrides = new Dictionary<string, EntityState>();
                 IsInit = true;
             }
         }
 
-        private static void GenericCharacterMain_FixedUpdate(On.EntityStates.GenericCharacterMain.orig_FixedUpdate orig, GenericCharacterMain self)
+        private static void GenericCharacterMain_FixedUpdate(ILContext il)
+        {
+            ILCursor c = new ILCursor(il);
+            Mono.Collections.Generic.Collection<Instruction> instructions = il.Method.Body.Instructions;
+            for(int i = 0; i < instructions.Count; i++)
+            {
+                // Match with ln170 in GenericCharacterMain.FixedUpdate (right after the last 
+                Instruction inst = instructions[i];
+                if(ILPatternMatchingExt.MatchCallvirt(inst, typeof(EffectManager), "SpawnEffect"))
+                {
+                    c.Goto(inst, MoveType.After);
+                }
+            }
+            // Load base name token onto the stack
+            c.Emit(OpCodes.Ldarg_0);
+            c.Emit(OpCodes.Call, "instance class RoR2.CharacterBody EntityState::get_characterBody()");
+            c.Emit(OpCodes.Ldfld, "string RoR2.CharacterBody::baseNameToken");
+            // Load state machine onto the stack
+            c.Emit(OpCodes.Ldarg_0);
+            c.Emit(OpCodes.Ldfld, "class RoR2.EntityStateMachine EntityStates.EntityState::outer");
+            c.EmitDelegate<Action<string, EntityStateMachine>>(delegate (string baseNameToken, EntityStateMachine stateMachine)
+            {
+                if(JumpOverrides.ContainsKey(baseNameToken))
+                {
+                    stateMachine.SetNextState(JumpOverrides[baseNameToken]);
+                }
+            });
+
+        }
+
+        /*
+        private static void BAD_GenericCharacterMain_FixedUpdate(On.EntityStates.GenericCharacterMain.orig_FixedUpdate orig, GenericCharacterMain self)
         {
             // Check for jump input first, since the base function resets input
             CharacterBody characterBody = ReflectionUtil.GetPropertyValue<CharacterBody>(self, "characterBody");
@@ -71,7 +103,7 @@ namespace BnellsCharacterReworks
                 self.outer.SetNextState(JumpOverrides[survivorIndex]);
             }
         }
-
+        */
         public static void AddSkillOverride(ExpandedSkillSlot skillSlot, SurvivorIndex survivor, EntityState activationState)
         {
             if(skillSlot != ExpandedSkillSlot.Jump)
